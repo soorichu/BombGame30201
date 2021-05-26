@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
         if(collision.collider.tag == "Obstacle")
         {
             ani.SetTrigger("damage");
+            GameManager.instance.AddScore(-1);
         }
     }
 }
