@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        if (GameManager.instance.isGameover) { return; }
+
         translation = Input.GetAxis("Vertical") * 10f;
         rotation = Input.GetAxis("Horizontal") * 100f;
 
@@ -33,10 +35,18 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.tag == "Obstacle")
+        if (GameManager.instance.isGameover) { return; }
+
+        if (collision.collider.tag == "Obstacle")
         {
             ani.SetTrigger("damage");
             GameManager.instance.AddScore(-1);
+        }
+
+        if (collision.collider.tag == "Enermy")
+        {
+            ani.SetTrigger("attack01");
+            GameManager.instance.OnPlayerDead();
         }
     }
 }
